@@ -71,14 +71,14 @@ C3 = (sum(x_square_3) * sum(delta_fi_i_3) - sum(B3) * sum(x_y_value_3)) / (len(B
 
 print()
 print(f"A1: {A1:.3f}, A2: {A2:.3f}, A3: {A3:.3f}")
-print(f"C1: {C1:.3f}, C2: {C2:.3f}, C3: {C3:.3f}")
+print()
 
 x_value = [x / 100 for x in range(-17, 17, 1)]
 
 
-A1_value = [A1 * x + C1 for x in x_value]
-A2_value = [A2 * x + C2 for x in x_value]
-A3_value = [A3 * x + C3 for x in x_value]
+A1_value = [A1 * x for x in x_value]
+A2_value = [A2 * x for x in x_value]
+A3_value = [A3 * x for x in x_value]
 
 
 # определение Холла
@@ -91,15 +91,25 @@ x_i_square = [I[i] ** 2 for i in range(len(I))]
 A_for_Hola = sum(x_y_i_multi) / sum(x_i_square)
 C_for_Hola = (sum(x_i_square) * sum(A) - sum(I) * sum(x_y_i_multi)) / (len(I) * sum(x_i_square) - ((sum(I)) ** 2))
 
-print()
+
 print(f"A Hola: {A_for_Hola:.3f}, C Hola: {C_for_Hola - 0.4:.3f}")
+print()
 
 x_i_value = [x / 10 for x in range(0, 45, 1)]
 y_i_value = [A_for_Hola * x_i_value[i] + C_for_Hola - 0.4 for i in range(len(x_i_value))]
 
+
+R = [A[i] * H for i in range(len(A))]
+
+avg_R = sum(R) / len(R)
+variance_R = sum((R[i] - avg_R)**2 for i in range(len(R)))
+standart_variance_R = variance_R ** 0.5
+
+print(f"avenger R: {avg_R}")
+print(f"standart variance: {standart_variance_R}")
 print()
-print(f"<R>: {A_for_Hola * H} - то что мы искали")
-print(f"<R> * 10^3: {A_for_Hola * H * 10**3}")
+
+print(f"<{avg_R}> +- {standart_variance_R}")
 
 
 plt.plot(I, A)
